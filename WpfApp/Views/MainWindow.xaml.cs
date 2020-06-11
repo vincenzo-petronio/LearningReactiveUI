@@ -3,7 +3,7 @@ using ReactiveUI;
 using System.Reactive.Disposables;
 using WpfApp.ViewModels;
 
-namespace WpfApp
+namespace WpfApp.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

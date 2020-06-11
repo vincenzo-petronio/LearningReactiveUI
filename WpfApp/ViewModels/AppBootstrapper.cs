@@ -20,12 +20,12 @@ namespace WpfApp.ViewModels
 
             // ReactiveUI IoC container
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
-            Locator.CurrentMutable.Register(() => new TodoView(), typeof(IViewFor<TodoViewModel>));
+            //Locator.CurrentMutable.Register(() => new TodoView(), typeof(IViewFor<TodoViewModel>));
 
             // INIT
             Version = Configuration["Version"];
 
-            Router.Navigate.Execute(new TodoViewModel(this));
+            //Router.Navigate.Execute(new TodoViewModel(this));
         }
 
         public RoutingState Router { get; private set; }

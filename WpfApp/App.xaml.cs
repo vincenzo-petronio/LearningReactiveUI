@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
+using WpfApp.Views;
 
 namespace WpfApp
 {
