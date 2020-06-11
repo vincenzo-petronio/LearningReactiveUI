@@ -4,10 +4,13 @@ using WpfApp.ViewModels;
 
 namespace WpfApp.Views
 {
+
+    public class TodoBaseView : ReactiveUserControl<TodoViewModel> { }
+
     /// <summary>
     /// Interaction logic for Todo.xaml
     /// </summary>
-    public partial class TodoView : IViewFor<TodoViewModel>
+    public partial class TodoView : TodoBaseView
     {
         public TodoView()
         {
