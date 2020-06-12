@@ -6,8 +6,23 @@
              xmlns:local="clr-namespace:WpfApp.Views"
              xmlns:reactiveui="http://reactiveui.net" 
              xmlns:vm="clr-namespace:WpfApp.ViewModels"
-             mc:Ignorable="d" >
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:MockTodoViewModel, IsDesignTimeCreatable=True}"
+             >
     <Grid>
-        <Label Name="ID_txt" FontSize="100" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Name="ID_title" Content="DesignTime lorem ipsum dolor..." Margin="8" />
+        <DockPanel Grid.Row="1">
+            <ListBox x:Name="ID_lvItems" Margin="8,16,8,8" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
     </Grid>
 </local:TodoBaseView>
