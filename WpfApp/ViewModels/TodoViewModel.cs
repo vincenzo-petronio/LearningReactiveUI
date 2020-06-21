@@ -1,11 +1,9 @@
 ﻿using DynamicData;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using WpfApp.Models;
 using WpfApp.Services;
 
@@ -15,46 +13,67 @@ namespace WpfApp.ViewModels
     {
         private string api => "jsonplaceholder.typicode.com/todos";
 
-        private IDataService dataService { get; set; }
+        private IDataService DataService { get; set; }
 
         private readonly ObservableAsPropertyHelper<string> title;
         public string Title => title.Value;
 
-        private readonly ReadOnlyObservableCollection<string> todoItems;
-        public ReadOnlyObservableCollection<string> TodoItems => todoItems;
+        /// <summary>
+        /// ReadOnlyObservable con la collection in binding sulla ListBox
+        /// </summary>
+        public ReadOnlyObservableCollection<string> TodoItems;
 
-        private SourceList<Todo> dataSource { get; } = new SourceList<Todo>();
+
+        private bool isProgressRunning = false;
+        public bool IsProgressRunning
+        {
+            get => isProgressRunning;
+            set => this.RaiseAndSetIfChanged(ref isProgressRunning, value);
+        }
+
+
+        private SourceList<Todo> DataSource { get; } = new SourceList<Todo>();
 
         public TodoViewModel(IScreen screen, IDataService dataService)
         {
             HostScreen = screen;
 
-            this.dataService = dataService;
+            this.DataService = dataService;
 
             this.WhenAnyValue(vm => vm.api)
                 .Where(x => !string.IsNullOrEmpty(x))
                 .ToProperty(this, vm => vm.Title, out title)
                 ;
 
-            dataSource
+            DataSource
                 .Connect()
-                .Transform(todo => todo.Title)
+                .Filter(todo => !todo.Id.Equals(10))
+                .Transform(todo => todo.Id + " - " + todo.Title)
                 .ObserveOnDispatcher()
-                .Bind(out todoItems)
+                .Bind(out TodoItems)
                 .DisposeMany()
                 .Subscribe()
                 ;
 
-            Task.Factory.StartNew(() => Init());
+            Init();
         }
 
-        private async void Init()
+        private async Task Init()
         {
-            var enumerableItems = await dataService.GetTodoItems();
-            foreach(var item in enumerableItems)
+            IsProgressRunning = true;
+
+            var enumerableItems = await DataService.GetTodoItems();
+            await Task.Run(async () =>
             {
-                dataSource.Add(item);
-            }
+                await Task.Delay(3000);
+
+                foreach (var item in enumerableItems)
+                {
+                    DataSource.Add(item);
+                }
+            });
+
+            IsProgressRunning = false;
         }
 
         #region Impl Interface

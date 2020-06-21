@@ -1,7 +1,10 @@
 ﻿using DynamicData;
+using ReactiveUI;
+using Splat;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using WpfApp.Services;
 
 namespace WpfApp.ViewModels
 {
@@ -10,22 +13,26 @@ namespace WpfApp.ViewModels
     /// </summary>
     public class MockTodoViewModel : TodoViewModel
     {
-        public MockTodoViewModel() : base(null, null)
+        private readonly ReadOnlyObservableCollection<string> todoItems;
+        public new ReadOnlyObservableCollection<string> TodoItems => todoItems;
+
+
+        public MockTodoViewModel() : base(Locator.Current.GetService<IScreen>(), new JsonPlaceholderService())
         {
-            //TodoItems =new ReadOnlyObservableCollection<string>(new List<string>()
-            //{
-            //    "AAA",
-            //    "BBB",
-            //    "cccc",
-            //    "ddd",
-            //    "eeeeeeeeeeeeeeeee",
-            //    "f",
-            //    "ggggg",
-            //    "HHHHHHhhhHHHHHHH",
-            //    "iii",
-            //    "lllll",
-            //    "jansdasnoemfs,dmf",
-            //});
+            todoItems.Add(new List<string>()
+            {
+                "AAA",
+                "BBB",
+                "cccc",
+                "ddd",
+                "eeeeeeeeeeeeeeeee",
+                "f",
+                "ggggg",
+                "HHHHHHhhhHHHHHHH",
+                "iii",
+                "lllll",
+                "jansdasnoemfs,dmf",
+            });
         }
 
     }

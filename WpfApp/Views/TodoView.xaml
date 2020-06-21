@@ -7,16 +7,18 @@
              xmlns:reactiveui="http://reactiveui.net" 
              xmlns:vm="clr-namespace:WpfApp.ViewModels"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance Type=vm:MockTodoViewModel, IsDesignTimeCreatable=True}"
              >
+             <!--d:DataContext="{d:DesignInstance Type=vm:MockTodoViewModel, IsDesignTimeCreatable=True}"-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Name="ID_title" Content="DesignTime lorem ipsum dolor..." Margin="8" />
-        <DockPanel Grid.Row="1">
-            <ListBox x:Name="ID_lvItems" Margin="8,16,8,8" >
+        <ProgressBar Grid.Row="0" Name="ID_pb" Height="4" VerticalAlignment="Top" IsIndeterminate="True" Visibility="Hidden" />
+        <Label Grid.Row="1" Name="ID_title" Content="DesignTime lorem ipsum dolor..." Margin="8" />
+        <DockPanel Grid.Row="2">
+            <ListBox x:Name="ID_lvItems" Margin="8,16,8,8">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" />

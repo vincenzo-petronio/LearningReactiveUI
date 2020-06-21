@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using WpfApp.ViewModels;
 
 namespace WpfApp.Views
@@ -21,6 +20,7 @@ namespace WpfApp.Views
             {
                 this.OneWayBind(this.ViewModel, vm => vm.Title, v => v.ID_title.Content).DisposeWith(disposable);
                 this.OneWayBind(this.ViewModel, vm => vm.TodoItems, v => v.ID_lvItems.ItemsSource).DisposeWith(disposable);
+                this.OneWayBind(this.ViewModel, vm => vm.IsProgressRunning, v => v.ID_pb.Visibility).DisposeWith(disposable);
             });
         }
     }
